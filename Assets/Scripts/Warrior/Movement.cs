@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,9 @@ public class Movement : MonoBehaviour
     public bool isJumping;
     
     public Rigidbody2D body;
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
+    
     public Transform groundCheckLeft;
     public Transform groundCheckRight;
     
@@ -27,6 +31,9 @@ public class Movement : MonoBehaviour
         }
 
         MoveWarrior(horizontalMovement);
+        
+        Flip(body.velocity.x);
+        animator.SetFloat("Speed", Math.Abs(body.velocity.x));
     }
 
     void MoveWarrior(float _horizontalMovement)
@@ -38,6 +45,17 @@ public class Movement : MonoBehaviour
         {
             body.AddForce(new Vector2(0f, jumpForce));
             isJumping = false; 
+        } 
+    }
+
+    void Flip(float _velocity)
+    {
+        if (_velocity > 0.1f)
+        {
+            spriteRenderer.flipX = false;
+        } else if (_velocity < -0.1f)
+        {
+            spriteRenderer.flipX = true;
         }
     }
 }
