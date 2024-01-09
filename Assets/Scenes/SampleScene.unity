@@ -1638,6 +1638,18 @@ MonoBehaviour:
     m_Bits: 128
   animator: {fileID: 1261661198}
   tr: {fileID: 1261661200}
+  dashingCooldown: 2
+  dashingPower: 24
+  dashingTime: 0.2
+  jumpingPower: 16
+  slidingCooldown: 1
+  slidingPower: 8
+  slidingTime: 0.5
+  speed: 10
+  wallJumpingDuration: 0.4
+  wallJumpingPower: {x: 8, y: 6}
+  wallJumpingTime: 0.2
+  wallSlidingSpeed: 2
 --- !u!96 &1261661200
 TrailRenderer:
   serializedVersion: 2

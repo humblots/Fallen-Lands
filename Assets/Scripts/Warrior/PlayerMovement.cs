@@ -10,20 +10,20 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private Animator animator;
     [SerializeField] private TrailRenderer tr;
-    private readonly float dashingCooldown = 2f;
-    private readonly float dashingPower = 24f;
-    private readonly float dashingTime = 0.2f;
+    public float dashingCooldown = 2f;
+    public float dashingPower = 24f;
+    public float dashingTime = 0.2f;
 
 
-    private readonly float jumpingPower = 16f;
-    private readonly float slidingCooldown = 1f;
-    private readonly float slidingPower = 8f;
-    private readonly float slidingTime = 0.5f;
-    private readonly float speed = 10f;
-    private readonly float wallJumpingDuration = 0.4f;
-    private readonly Vector2 wallJumpingPower = new(4f, 8f);
-    private readonly float wallJumpingTime = 0.2f;
-    private readonly float wallSlidingSpeed = 2f;
+    public float jumpingPower = 16f;
+    public float slidingCooldown = 1f;
+    public float slidingPower = 8f;
+    public float slidingTime = 0.5f;
+    public float speed = 10f;
+    public float wallJumpingDuration = 0.15f;
+    public Vector2 wallJumpingPower = new(10f, 8f);
+    public float wallJumpingTime = 0.15f;
+    public float wallSlidingSpeed = 2f;
 
     private bool canDash = true;
     private bool canSlide = true;
