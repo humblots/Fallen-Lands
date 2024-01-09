@@ -43,16 +43,10 @@ public class PlayerMovement : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
 
         var isGrounded = IsGrounded();
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
-            animator.SetBool("isJumping", true);
-        }
-        else
-        {
-            animator.SetBool("isJumping", false);
-        }
+        if (!isGrounded && !isWallSliding) animator.SetBool("isJumping", true);
+        else animator.SetBool("isJumping", false);
 
+        if (Input.GetButtonDown("Jump") && isGrounded) rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         if (Input.GetButtonDown("Jump") && rb.velocity.y > 0f)
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 
@@ -74,7 +68,8 @@ public class PlayerMovement : MonoBehaviour
         if (!isWallJumping)
         {
             rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
-            animator.SetBool("isRunning", horizontal != 0f);
+            animator.SetFloat("xVelocity", Mathf.Abs(rb.velocity.x));
+            animator.SetFloat("yVelocity", rb.velocity.y);
         }
     }
 
@@ -108,7 +103,6 @@ public class PlayerMovement : MonoBehaviour
         if (isWallSliding)
         {
             isWallJumping = false;
-            animator.SetBool("isJumping", false);
             wallJumpingDirection = -transform.localScale.x;
             wallJumpingCounter = wallJumpingTime;
             CancelInvoke(nameof(StopWalljumping));
@@ -121,7 +115,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
         {
             isWallJumping = true;
-            animator.SetBool("isJumping", true);
             rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
 

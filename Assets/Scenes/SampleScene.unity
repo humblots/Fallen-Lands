@@ -1448,8 +1448,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.03, y: -0.5}
-  m_Size: {x: 1.5, y: 2}
+  m_Offset: {x: 1.44, y: -0.65}
+  m_Size: {x: 1.8, y: 2.5}
   m_Direction: 0
 --- !u!1 &1254687893
 GameObject:
@@ -1646,9 +1646,9 @@ MonoBehaviour:
   slidingPower: 8
   slidingTime: 0.5
   speed: 10
-  wallJumpingDuration: 0.4
-  wallJumpingPower: {x: 8, y: 6}
-  wallJumpingTime: 0.2
+  wallJumpingDuration: 0.15
+  wallJumpingPower: {x: 10, y: 8}
+  wallJumpingTime: 0.15
   wallSlidingSpeed: 2
 --- !u!96 &1261661200
 TrailRenderer:
