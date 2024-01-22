@@ -21,8 +21,8 @@ public class Entity : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log(name + " died");
         animator.SetBool("isDead", true);
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         GetComponent<Collider2D>().enabled = false;
         enabled = false;
     }
