@@ -3,6 +3,7 @@
 	Adapted to my personal needs 
  */
 
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
 	#region COMPONENTS
     public Rigidbody2D RB { get; private set; }
     public Animator Animator { get; private set; }
+	[SerializeField] private GameObject TRObject;
+    private TrailRenderer TR;
     #endregion
 
 	#region STATE PARAMETERS
@@ -20,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
 	public bool IsJumping { get; private set; }
 	public bool IsWallJumping { get; private set; }
 	public bool IsDashing { get; private set; }
-	public bool IsSliding { get; private set; }
+	public bool IsWallSliding { get; private set; }
 
 	public float LastOnGroundTime { get; private set; }
 	public float LastOnWallTime { get; private set; }
@@ -58,10 +61,11 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] private LayerMask _wallLayer;
 	#endregion
 
-    private void Awake()
+	private void Awake()
 	{
 		RB = GetComponent<Rigidbody2D>();
 		Animator = GetComponent<Animator>();
+		TR = TRObject.GetComponent<TrailRenderer>();
 	}
 
 	private void Start()
@@ -75,9 +79,9 @@ public class PlayerMovement : MonoBehaviour
 		SetTimers();
 		Inputs();
 		CollisionsCheck();
+		WallSlideLogic();
 		JumpsLogic();
 		DashLogic();
-		SlideLogic();
 		GravityLogic();
 	}
 
@@ -98,9 +102,6 @@ public class PlayerMovement : MonoBehaviour
 		{
 			Run(Data.dashEndRunLerp);
 		}
-
-		if (IsSliding)
-			Slide();
     }
 
     #region TIMERS
@@ -168,11 +169,7 @@ public class PlayerMovement : MonoBehaviour
     {
 	    if (!_isDashAttacking)
 	    {
-		    if (IsSliding)
-		    {
-			    SetGravityScale(0);
-		    }
-		    else if (RB.velocity.y < 0 && _moveInput.y < 0)
+		    if (RB.velocity.y < 0 && _moveInput.y < 0)
 		    {
 			    SetGravityScale(Data.gravityScale * Data.fastFallGravityMult);
 			    RB.velocity = new Vector2(RB.velocity.x, Mathf.Max(RB.velocity.y, -Data.maxFastFallSpeed));
@@ -371,8 +368,8 @@ public class PlayerMovement : MonoBehaviour
 		_dashesLeft--;
 		_isDashAttacking = true;
 
+		TR.emitting = true;
 		SetGravityScale(0);
-
 		Animator.SetBool("isDashing", true);
 		while (Time.time - startTime <= Data.dashAttackTime)
 		{
@@ -394,6 +391,7 @@ public class PlayerMovement : MonoBehaviour
 
 		IsDashing = false;
 		Animator.SetBool("isDashing", false);
+		TR.emitting = false;
 	}
 
 	private IEnumerator RefillDash(int amount)
@@ -405,30 +403,22 @@ public class PlayerMovement : MonoBehaviour
 	}
 	#endregion
 
-	#region SLIDE METHODS
-	private void SlideLogic()
-	{
-		if (CanSlide() && (LastOnWallTime > 0 && _moveInput.x != 0))
-			IsSliding = true;
-		else
-			IsSliding = false;
-	}
-	
-	private void Slide()
-	{
-		if(RB.velocity.y > 0)
-		{
-		    RB.AddForce(-RB.velocity.y * Vector2.up,ForceMode2D.Impulse);
-		}
-	
-		float speedDif = Data.slideSpeed - RB.velocity.y;	
-		float movement = speedDif * Data.slideAccel;
-		movement = Mathf.Clamp(movement, -Mathf.Abs(speedDif)  * (1 / Time.fixedDeltaTime), Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime));
+    #region WALL SLIDE METHODS
 
-		RB.AddForce(movement * Vector2.up);
-	}
+    private void WallSlideLogic()
+    {
+	    if (IsFacingWall() && !IsGrounded() && !IsJumping && _moveInput.x != 0f)
+	    {
+		    IsWallSliding = true;
+		    Animator.SetBool("isWallSliding", true);
+	    }
+	    else
+	    {
+		    IsWallSliding = false;
+		    Animator.SetBool("isWallSliding", false);
+	    }
+    }
     #endregion
-
 
     #region CHECK METHODS
     private void CollisionsCheck()
@@ -460,7 +450,7 @@ public class PlayerMovement : MonoBehaviour
 
 	private bool CanWallJump()
     {
-		return LastPressedJumpTime > 0 && LastOnWallTime > 0 && LastOnGroundTime <= 0 && !IsWallJumping;
+		return LastPressedJumpTime > 0 && LastOnWallTime > 0 && LastOnGroundTime <= 0 && !IsWallJumping && IsWallSliding;
     }
 
 	private bool CanJumpCut()
@@ -481,14 +471,6 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 		return _dashesLeft > 0;
-	}
-
-	public bool CanSlide()
-    {
-		if (LastOnWallTime > 0 && !IsJumping && !IsWallJumping && !IsDashing && LastOnGroundTime <= 0)
-			return true;
-		else
-			return false;
 	}
 
 	public bool IsGrounded()

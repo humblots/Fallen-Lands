@@ -54,9 +54,6 @@ public class PlayerData : ScriptableObject
 	public bool doTurnOnWallJump;
 
 	[Space(20)]
-	[Header("Slide")]
-	public float slideSpeed;
-	public float slideAccel;
 
     [Header("Assists")]
 	[Range(0.01f, 0.5f)] public float coyoteTime;
