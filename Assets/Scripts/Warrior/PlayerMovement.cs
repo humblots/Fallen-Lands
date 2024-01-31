@@ -3,7 +3,6 @@
 	Adapted to my personal needs 
  */
 
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
 	#region COMPONENTS
     public Rigidbody2D RB { get; private set; }
     public Animator Animator { get; private set; }
-	[SerializeField] private GameObject TRObject;
+	[SerializeField] public GameObject TRObject;
     private TrailRenderer TR;
     #endregion
 

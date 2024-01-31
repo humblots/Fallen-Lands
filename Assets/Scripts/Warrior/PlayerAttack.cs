@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -7,10 +6,10 @@ public class PlayerAttack : MonoBehaviour
     public float attackRange = 2f;
     public float initialAttackDelay = 2f;
     public float knockbackForce = 1.5f;
+
+    private float _attackDelay;
     
-    private float attackDelay = 0f;
-    
-    private PlayerMovement playerMovement;
+    private PlayerMovement _playerMovement;
     
     [SerializeField] public Animator animator;
     [SerializeField] public Transform attackPoint;
@@ -18,22 +17,22 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     { 
-        playerMovement = GetComponent<PlayerMovement>();
+        _playerMovement = GetComponent<PlayerMovement>();
     }
 
     private void Update()
     {
-        if (attackDelay <= 0)
+        if (_attackDelay <= 0)
         {
             if (Input.GetMouseButtonDown(0))
             {
                 Attack();
-                attackDelay = initialAttackDelay;
+                _attackDelay = initialAttackDelay;
             }
         }
         else
         {
-            attackDelay -= Time.deltaTime;
+            _attackDelay -= Time.deltaTime;
         }
     }
 
@@ -49,7 +48,7 @@ public class PlayerAttack : MonoBehaviour
         var hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
         foreach (var enemy in hitEnemies)
         {
-            var knockBackDir = playerMovement.IsFacingRight ? 1f : -1f;
+            var knockBackDir = _playerMovement.IsFacingRight ? 1f : -1f;
             enemy.GetComponent<Rigidbody2D>()
                 .AddForce(new Vector2(knockBackDir * knockbackForce, 0f), ForceMode2D.Impulse);
             enemy.GetComponent<Entity>().TakeDamage(attackDamage);
