@@ -1551,7 +1551,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1254687893}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.18, y: 0, z: 0}
+  m_LocalPosition: {x: 0.2, y: 0.495, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1572,12 +1572,12 @@ GameObject:
   - component: {fileID: 1261661198}
   - component: {fileID: 1261661200}
   - component: {fileID: 1261661201}
-  - component: {fileID: 1261661199}
   - component: {fileID: 1261661202}
   - component: {fileID: 1261661203}
+  - component: {fileID: 1261661204}
   m_Layer: 0
   m_Name: Warrior
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1664,13 +1664,13 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 50
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.5
-  m_Material: {fileID: 0}
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: 72e420f6a68dee58b8d3dabd6e4dbead, type: 2}
   m_Interpolate: 1
-  m_SleepingMode: 0
+  m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &1261661198
@@ -1694,41 +1694,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1261661199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1261661192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8326786eb9eb7417a819f5cfa689f8ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 1261661196}
-  groundCheck: {fileID: 972344796}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  wallCheck: {fileID: 1254687894}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  animator: {fileID: 1261661198}
-  tr: {fileID: 1261661200}
-  dashingCooldown: 2
-  dashingPower: 24
-  dashingTime: 0.2
-  jumpingPower: 12
-  slidingCooldown: 1
-  slidingPower: 8
-  slidingTime: 0.5
-  speed: 10
-  wallJumpingDuration: 0.15
-  wallJumpingPower: {x: 10, y: 8}
-  wallJumpingTime: 0.15
-  wallSlidingSpeed: 2
 --- !u!96 &1261661200
 TrailRenderer:
   serializedVersion: 2
@@ -1887,6 +1852,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 200
   animator: {fileID: 1261661198}
+--- !u!114 &1261661204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261661192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 366cca88de2a6fb3bb300da144a45d8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: e6de6150ab38ff74b9ee0fa32028adf7, type: 2}
+  _groundCheckPoint: {fileID: 972344796}
+  _groundCheckRadius: 0.1
+  _wallCheckPoint: {fileID: 1254687894}
+  _wallCheckRadius: 0.15
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 320
+  _wallLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &1730134718
 GameObject:
   m_ObjectHideFlags: 0
