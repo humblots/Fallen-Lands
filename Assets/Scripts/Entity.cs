@@ -27,7 +27,7 @@ public class Entity : MonoBehaviour
         enabled = false;
     }
     
-    public void Destroy()
+    public void DestroySelf()
     {
         Destroy(gameObject);
     }
