@@ -352,6 +352,7 @@ public class PlayerMovement : MonoBehaviour
 			IsJumping = false;
 			IsWallJumping = false;
 			_isJumpCut = false;
+			Animator.SetBool("isJumping", false);
 
 			StartCoroutine(nameof(StartDash), _lastDashDir);
 		}

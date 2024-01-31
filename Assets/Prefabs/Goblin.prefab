@@ -155,8 +155,8 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
+  m_UseAutoMass: 1
+  m_Mass: 0.9061725
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -206,9 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f80fa76810d10f05e950e058a99d00c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runMaxSpeed: 9
-  runAcceleration: 2
-  runDecceleration: 6
+  speed: 10
 --- !u!114 &-6413463575551478801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,9 +219,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfd776e191ab487cd80ff47abd1536dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 10
+  attackDamage: 5
   attackRange: 0.5
-  initialAttackDelay: 2
+  initialAttackDelay: 0.3
   knockbackForce: 1.5
   attackPoint: {fileID: 138214047248173928}
   playerLayer:

@@ -2,9 +2,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    public float runMaxSpeed = 15f;
-    public float runAcceleration = 3f;
-    public float runDecceleration = 6f;
+    public float speed = 15f;
     
     public bool IsFacingRight { get; private set; }
     
@@ -23,23 +21,16 @@ public class EnemyMovement : MonoBehaviour
     {
         var direction = GetPlayerDirection(player);
         if (direction > 0 && !IsFacingRight || direction < 0 && IsFacingRight) Turn();
-        
-        float targetSpeed = direction * runMaxSpeed;
 
-        float accelRate;
-        accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? runAcceleration : runDecceleration;
-        
-        float speedDif = targetSpeed - _rb.velocity.x;
-        float movement = speedDif * accelRate;
-
-        _rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
+        _rb.velocity = new Vector2(direction * speed, _rb.velocity.y);
         _animator.SetFloat("xVelocity", Mathf.Abs(_rb.velocity.x));
     }
     
     // Get the direction of the player
     public float GetPlayerDirection(Transform player)
     {
-        return player.position.x - transform.position.x;
+        var direction = player.position.x - transform.position.x;
+        return direction < 0 ? -1 : 1;
     }
     
     public void Turn ()
