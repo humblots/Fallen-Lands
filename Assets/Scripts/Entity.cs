@@ -7,8 +7,8 @@ public class Entity : MonoBehaviour
     private Animator _animator;
     private Rigidbody2D _rb;
     private Collider2D _collider;
-    
-    private float currentHealth;
+
+    public float currentHealth { get; private set; }
 
     private void Start()
     {
