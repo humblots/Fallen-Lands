@@ -26,4 +26,9 @@ public class Entity : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
         enabled = false;
     }
+    
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
 }

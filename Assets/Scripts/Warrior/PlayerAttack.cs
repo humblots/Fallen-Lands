@@ -10,10 +10,9 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] public Transform attackPoint;
     [SerializeField] public LayerMask enemyLayer;
 
-    // Update is called once per frame
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1")) Attack();
+        if (Input.GetMouseButtonDown(0)) Attack();
     }
 
     private void OnDrawGizmosSelected()
@@ -24,13 +23,8 @@ public class PlayerAttack : MonoBehaviour
 
     private void Attack()
     {
-        // Trigger animation
         animator.SetTrigger("attack");
-
-        // Get enemies to hit
         var hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
-
-        // Damage them
         foreach (var enemy in hitEnemies) enemy.GetComponent<Entity>().TakeDamage(attackDamage);
     }
 }
